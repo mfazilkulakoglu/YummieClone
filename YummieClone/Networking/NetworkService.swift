@@ -31,9 +31,9 @@ struct NetworkService {
     }
     
     private func request<T: Decodable>(route: Route,
-                                     method: Method,
-                                     parameters: [String: Any]? = nil,
-                                     completion: @escaping (Result<T, Error>) -> Void) {
+                                       method: Method,
+                                       parameters: [String: Any]? = nil,
+                                       completion: @escaping (Result<T, Error>) -> Void) {
         guard let request = createRequest(route: route, method: method, parameters: parameters) else {
             completion(.failure(AppError.unknownError))
             return
@@ -57,7 +57,7 @@ struct NetworkService {
     }
     
     private func handleResponse<T: Decodable>(result: Result<Data, Error>?,
-                                completion: (Result<T, Error>) -> Void) {
+                                              completion: (Result<T, Error>) -> Void) {
         guard let result = result else {
             completion(.failure(AppError.unknownError))
             return
@@ -82,7 +82,7 @@ struct NetworkService {
         case .failure(let error):
             completion(.failure(error))
         }
-
+        
     }
     
     /// This function helps us to generate a urlRequest
@@ -111,7 +111,7 @@ struct NetworkService {
             case .post, .delete, .patch:
                 let bodyData = try? JSONSerialization.data(withJSONObject: params, options: [])
                 urlRequest.httpBody = bodyData
-            
+                
             }
         }
         return urlRequest
